@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary-green: #27421d;
+  --color-pale-cream: #f3f5ea;
+  --color-green-highlight: #dce9c7;
+  --color-card-bg: #fafcf5;
+  --color-card-border: #e2e9d4;
+  --color-text-secondary: #5a7250;
+  --color-alert-red: #c62828;
+  --color-hotspot-crimson: #dc2626;
+}
+
+body {
+  background-color: #f3f5ea;
+  color: #27421d;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* 2D Panning compliance based on modern-web-guidance */
+.pan-viewport {
+  overflow: hidden; /* Leaflet manages its own scroll/pan internally */
+  overscroll-behavior: none;
+}
+
+.pan-viewport:focus-visible {
+  outline: 3px solid #27421d;
+  outline-offset: 2px;
+}
+
+/* Leaflet map customization to match Kisaan Bandhu mobile theme */
+.leaflet-container {
+  background-color: #f3f5ea !important;
+  font-family: inherit;
+  border-radius: 1.5rem;
+}
+
+/* ── Critical fix: remove Leaflet's default white-box divIcon styling ──
+   Without this, custom outbreak marker HTML is hidden under a white square */
+.leaflet-div-icon {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* outbreak-custom-pin wrapper — must be transparent so halos show through */
+.outbreak-custom-pin {
+  background: transparent !important;
+  border: none !important;
+  overflow: visible !important;
+}
+
+/* State center label typography */
+.state-center-label {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  pointer-events: none !important;
+  padding: 0 !important;
+}
+
+.state-label-text {
+  color: #27421d;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: -0.01em;
+  text-shadow: 0 0 3px #ffffff, 0 0 6px #f3f5ea, 0 0 10px #f3f5ea;
+  opacity: 0.85;
+  transform: translateY(-50%);
+}
+
+/* Pulsing radar animation for critical confirmed outbreak hotspots */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.heat-pulse-marker {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.heat-pulse-marker .pulse-ring {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(220, 38, 38, 0.45);
+  animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+.heat-pulse-marker .core-dot {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #c62828;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 10px rgba(198, 40, 40, 0.75);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f3f5ea;
+}
+::-webkit-scrollbar-thumb {
+  background: #dce9c7;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #27421d;
+}

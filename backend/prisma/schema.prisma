@@ -1,0 +1,154 @@
+// Prisma schema for Kisaan Bandhu backend (MongoDB)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  FARMER
+  OFFICER
+  ADMIN
+}
+
+enum SeverityLevel {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model User {
+  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  email             String      @unique
+  passwordHash      String
+  name              String
+  phone             String?
+  location          String?
+  preferredLanguage String      @default("English")
+  role              Role        @default(FARMER)
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  farms             Farm[]
+  detections        Detection[]
+  alerts            Alert[]
+
+  @@map("users")
+}
+
+type GeoCoordinate {
+  latitude       Float
+  longitude      Float
+  accuracyMeters Float?
+  timestamp      DateTime?
+}
+
+model Farm {
+  id               String          @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String          @db.ObjectId
+  user             User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name             String
+  boundary         GeoCoordinate[]
+  center           GeoCoordinate
+  areaSquareMeters Float           @default(0.0)
+  cropType         String?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  detections       Detection[]
+
+  @@index([userId])
+  @@map("farms")
+}
+
+type AssessmentMessage {
+  id        String   @default(uuid())
+  text      String
+  sender    String   // 'user' | 'assistant'
+  timestamp DateTime @default(now())
+}
+
+type FieldAssessment {
+  id                    String   @default(uuid())
+  createdAt             DateTime @default(now())
+  crop                  String
+  condition             String
+  mlPrediction          String
+  mlConfidence          Float
+  severity              String   // 'early' | 'moderate' | 'worsening' | 'severe'
+  progressionStatus     String   // 'initial' | 'improved' | 'stable' | 'worsening'
+  recommendationSummary String
+  actionLevel           String   // 'monitor' | 'integrated' | 'chemical' | 'expert'
+  followUpDays          Int      @default(7)
+  farmerQuestion        String
+  weatherSnapshot       String?
+  imagePath             String?
+}
+
+model Detection {
+  id                   String            @id @default(auto()) @map("_id") @db.ObjectId
+  userId               String            @db.ObjectId
+  user                 User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  farmId               String?           @db.ObjectId
+  farm                 Farm?             @relation(fields: [farmId], references: [id], onDelete: SetNull)
+
+  crop                 String
+  predictedClass       String
+  condition            String
+  confidence           Float
+  severity             SeverityLevel     @default(CRITICAL)
+  isCritical           Boolean           @default(true)
+
+  margin               Float?            @default(0.0)
+  blurScore            Float?            @default(0.0)
+  status               String?           @default("validTarget")
+
+  imageUrl             String?
+  notes                String?
+  latitude             Float?
+  longitude            Float?
+  accuracyMeters       Float?
+
+  latestSeverity       String?
+  latestRecommendation String?
+  reviewCount          Int               @default(0)
+  lastReviewedAt       DateTime?
+
+  assessments          FieldAssessment[]
+  messages             AssessmentMessage[]
+
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+
+  @@index([userId])
+  @@index([farmId])
+  @@index([isCritical])
+  @@index([crop])
+  @@map("detections")
+}
+
+model Alert {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId              String   @db.ObjectId
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type                String   // 'extreme_heat' | 'heavy_rain' | 'disease_risk'
+  title               String
+  message             String
+  severity            String   // 'low' | 'medium' | 'high'
+  farmId              String?
+  weatherContext      String?  // JSON string
+  relatedDetectionId  String?
+  read                Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([userId])
+  @@map("alerts")
+}

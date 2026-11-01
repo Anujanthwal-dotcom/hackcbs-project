@@ -1,0 +1,158 @@
+# ============================================================
+# KisaanBandhu — .gitignore
+# ============================================================
+
+# ─────────────────────────────────────────────────────────────
+# macOS
+# ─────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.AppleDouble
+.LSOverride
+Icon
+
+# ─────────────────────────────────────────────────────────────
+# Environment / Secrets — NEVER COMMIT
+# ─────────────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.staging
+backend/.env
+dashboard/.env
+dashboard/.env.local
+dashboard/.env.development.local
+dashboard/.env.production.local
+dashboard/.env.test.local
+
+# ─────────────────────────────────────────────────────────────
+# Node.js
+# ─────────────────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# ─────────────────────────────────────────────────────────────
+# Build outputs
+# ─────────────────────────────────────────────────────────────
+backend/dist/
+backend/tsconfig.build.tsbuildinfo
+dashboard/.next/
+dashboard/out/
+.next/
+
+# ─────────────────────────────────────────────────────────────
+# Flutter / Dart
+# ─────────────────────────────────────────────────────────────
+**/build/
+**/.dart_tool/
+**/.pub-cache/
+**/.pub/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/.packages
+**/*.g.dart
+**/*.freezed.dart
+**/*.mocks.dart
+
+# ─────────────────────────────────────────────────────────────
+# Large ML / LLM model files — store with Git LFS or externally
+# ─────────────────────────────────────────────────────────────
+*.keras
+*.h5
+*.pt
+*.pth
+*.bin
+*.task
+*.onnx
+*.onnx.data
+*.gguf
+*.ggml
+*.safetensors
+*.tflite
+*.zip
+**/models/
+rag/saved_model/
+
+# ─────────────────────────────────────────────────────────────
+# Python
+# ─────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+.venv/
+venv/
+ENV/
+.python-version
+
+# ─────────────────────────────────────────────────────────────
+# RAG / Vector DB
+# ─────────────────────────────────────────────────────────────
+rag/chroma_db/
+rag/__pycache__/
+
+# ─────────────────────────────────────────────────────────────
+# Prisma generated client
+# ─────────────────────────────────────────────────────────────
+backend/src/generated/prisma/
+
+# ─────────────────────────────────────────────────────────────
+# TypeScript
+# ─────────────────────────────────────────────────────────────
+*.tsbuildinfo
+next-env.d.ts
+
+# ─────────────────────────────────────────────────────────────
+# Logs
+# ─────────────────────────────────────────────────────────────
+*.log
+logs/
+npm-debug.log*
+pnpm-debug.log*
+
+# ─────────────────────────────────────────────────────────────
+# IDE & Editor
+# ─────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ─────────────────────────────────────────────────────────────
+# Firebase
+# ─────────────────────────────────────────────────────────────
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# ─────────────────────────────────────────────────────────────
+# Misc
+# ─────────────────────────────────────────────────────────────
+*.tmp
+*.temp
+.cache/
+coverage/
+.nyc_output/

@@ -1,0 +1,30 @@
+{
+  "name": "kisaan-bandhu",
+  "version": "1.0.0",
+  "description": "KisaanBandhu - Agricultural Decision Support System with NestJS, MongoDB & Flutter",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "start": "node scripts/dev.js",
+    "backend:dev": "cd backend && bun run start:dev",
+    "backend:build": "cd backend && bun run build",
+    "dashboard:dev": "cd dashboard && bun run dev --port 3001",
+    "dashboard:build": "cd dashboard && bun run build",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f",
+    "adb:reverse": "adb reverse tcp:3000 tcp:3000",
+    "mobile:run": "node scripts/mobile-run.js",
+    "mobile:build": "cd mobile && flutter build apk --dart-define=BACKEND_URL=http://127.0.0.1:3000"
+  },
+  "keywords": [
+    "agriculture",
+    "nestjs",
+    "prisma",
+    "mongodb",
+    "flutter"
+  ],
+  "author": "",
+  "license": "UNLICENSED"
+}
+

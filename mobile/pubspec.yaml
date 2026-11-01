@@ -1,0 +1,45 @@
+name: app
+description: "KisaanBandhu — Agricultural Decision Support System"
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.11.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  camera: ^0.11.4
+  geolocator: ^13.0.4
+  permission_handler: ^11.4.0
+  tflite_flutter: ^0.12.1
+  image: ^4.12.0
+  intl: ^0.20.3
+  mapbox_maps_flutter: ^2.31.1
+  http: ^1.6.0
+  url_launcher: ^6.3.3
+  # New intelligence layer dependencies
+  flutter_local_notifications: ^18.0.1
+  shared_preferences: ^2.5.6
+  image_picker: ^1.2.4
+  path_provider: ^2.1.6
+  flutter_gemma: ^1.11.4
+  flutter_gemma_mediapipe: ^1.0.9
+  flutter_gemma_litertlm: ^1.8.6
+  flutter_markdown_plus: ^1.0.12
+  speech_to_text: ^7.5.0
+  flutter_tts: ^4.2.2
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  generate: true
+  uses-material-design: true
+  assets:
+    - assets/ml/
+    - assets/rag/
+

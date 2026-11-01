@@ -1,0 +1,51 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Root users collection: isolated by Firebase Auth UID
+    match /users/{userId} {
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow read, update, delete: if request.auth != null && request.auth.uid == userId;
+
+      // User's private farms
+      match /farms/{farmId} {
+        allow create: if request.auth != null && request.auth.uid == userId;
+        allow read, update, delete: if request.auth != null && request.auth.uid == userId;
+      }
+
+      // User's private detection history
+      match /detections/{detectionId} {
+        allow create: if request.auth != null && request.auth.uid == userId;
+        allow read, update, delete: if request.auth != null && request.auth.uid == userId;
+      }
+
+      // User's private settings/preferences
+      match /settings/{settingId} {
+        allow create: if request.auth != null && request.auth.uid == userId;
+        allow read, update, delete: if request.auth != null && request.auth.uid == userId;
+      }
+
+      // User's private AI/RAG consultation conversations
+      match /conversations/{conversationId} {
+        allow create: if request.auth != null && request.auth.uid == userId;
+        allow read, update, delete: if request.auth != null && request.auth.uid == userId;
+
+        match /messages/{messageId} {
+          allow create: if request.auth != null && request.auth.uid == userId;
+          allow read, update, delete: if request.auth != null && request.auth.uid == userId;
+        }
+      }
+
+      // Subcollections fallback
+      match /{subcollection}/{document=**} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Default deny all other paths to prevent data leaks
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

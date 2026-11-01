@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "871133301239",
+    "project_id": "techies-sih2026",
+    "storage_bucket": "techies-sih2026.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871133301239:android:a529c4f7700d0a2c1c46f2",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhO3Q-wYJWQ8ug_OtP7_2b6wDiejDBGq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
