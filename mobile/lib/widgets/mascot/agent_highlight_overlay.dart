@@ -149,8 +149,9 @@ class _AgentHighlightOverlayState extends State<AgentHighlightOverlay>
                               ),
                             ),
                           ),
-                          InkWell(
+                          GestureDetector(
                             onTap: () => SemanticUiRegistry.instance.clearHighlight(),
+                            behavior: HitTestBehavior.opaque,
                             child: const Padding(
                               padding: EdgeInsets.all(4),
                               child: Icon(Icons.close, color: Colors.white70, size: 18),
@@ -172,14 +173,33 @@ class _AgentHighlightOverlayState extends State<AgentHighlightOverlay>
                       const SizedBox(height: 10),
                       Align(
                         alignment: Alignment.centerRight,
-                        child: TextButton.icon(
-                          onPressed: () => SemanticUiRegistry.instance.clearHighlight(),
-                          icon: const Icon(Icons.check, size: 16, color: Color(0xFFC7E898)),
-                          label: const Text(
-                            'Got it',
-                            style: TextStyle(
-                              color: Color(0xFFC7E898),
-                              fontWeight: FontWeight.bold,
+                        child: GestureDetector(
+                          onTap: () => SemanticUiRegistry.instance.clearHighlight(),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF76BA1B).withValues(alpha: 0.18),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: const Color(0xFF8BAE68),
+                                width: 1.0,
+                              ),
+                            ),
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.check, size: 16, color: Color(0xFFC7E898)),
+                                SizedBox(width: 4),
+                                Text(
+                                  'Got it',
+                                  style: TextStyle(
+                                    color: Color(0xFFC7E898),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                    decoration: TextDecoration.none,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),

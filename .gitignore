@@ -67,7 +67,7 @@ mobile/.packages
 **/*.mocks.dart
 
 # ─────────────────────────────────────────────────────────────
-# Large ML / LLM model files — store with Git LFS or externally
+# Large ML / LLM model files — store externally or via download scripts
 # ─────────────────────────────────────────────────────────────
 *.keras
 *.h5
@@ -80,10 +80,13 @@ mobile/.packages
 *.gguf
 *.ggml
 *.safetensors
-*.tflite
 *.zip
-**/models/
 rag/saved_model/
+**/saved_models/
+**/weights/
+
+# Do NOT ignore Dart/Flutter data models
+!mobile/lib/**/models/
 
 # ─────────────────────────────────────────────────────────────
 # Python
