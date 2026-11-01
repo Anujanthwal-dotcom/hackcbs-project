@@ -61,6 +61,11 @@ class GuidedDemoService extends ChangeNotifier {
 
   bool _isRunning = false;
   bool _isPaused = false;
+
+  /// Set to true the instant the user confirms the demo launch,
+  /// before the 300ms sheet-pop delay. Prevents wake-word listener
+  /// from re-opening the mascot sheet during the transition window.
+  bool _isLaunching = false;
   int _currentStepIndex = 0;
   String _languageCode = 'hi'; // 'hi' or 'en'
   Timer? _stepCountdownTimer;
@@ -69,6 +74,16 @@ class GuidedDemoService extends ChangeNotifier {
 
   bool get isRunning => _isRunning;
   bool get isPaused => _isPaused;
+
+  /// True while demo is running OR in the pre-launch transition window.
+  /// Use this to block wake-word listener from re-opening the mascot sheet.
+  bool get isRunningOrLaunching => _isRunning || _isLaunching;
+
+  /// Call this synchronously the moment the user confirms demo launch,
+  /// before the sheet pop + 300ms delay, so wake-word is suppressed immediately.
+  void reserveLaunch() {
+    _isLaunching = true;
+  }
   int get currentStepIndex => _currentStepIndex;
   int get totalSteps => _demoSteps.length;
   String get languageCode => _languageCode;
@@ -303,6 +318,7 @@ class GuidedDemoService extends ChangeNotifier {
   void startDemo({String? languageCode}) {
     _stepCountdownTimer?.cancel();
     _isRunning = true;
+    _isLaunching = false; // Clear pre-launch flag — _isRunning takes over
     _isPaused = false;
     _currentStepIndex = 0;
     _languageCode = languageCode ?? (LanguageService.instance.isHindi ? 'hi' : 'en');
@@ -459,6 +475,7 @@ class GuidedDemoService extends ChangeNotifier {
     _stepCountdownTimer?.cancel();
     _stepCountdownTimer = null;
     _isRunning = false;
+    _isLaunching = false; // Safety: clear pre-launch flag too
     _isPaused = false;
     _voiceService.stopSpeaking();
     _registry.clearHighlight();

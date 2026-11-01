@@ -62,11 +62,11 @@ class _GlobalMascotOverlayState extends State<GlobalMascotOverlay>
   }
 
   void _startWakeWordListening() {
-    if (_isSheetOpen || GuidedDemoService.instance.isRunning) return;
+    if (_isSheetOpen || GuidedDemoService.instance.isRunningOrLaunching) return;
     _voiceService.startWakeWordListening(
       preferredLanguageCode: 'hi',
       onWakeWordDetected: (trigger) {
-        if (mounted && !_isSheetOpen) {
+        if (mounted && !_isSheetOpen && !GuidedDemoService.instance.isRunningOrLaunching) {
           debugPrint('[GlobalMascotOverlay] Wake word detected: "$trigger" -> Opening mascot');
           final isDemo = GuidedDemoService.isDemoTrigger(trigger);
           _openConversationSheet(

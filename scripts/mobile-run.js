@@ -213,8 +213,9 @@ try {
   log('WARN', c.yellow, 'ADB not found in PATH. Skipping reverse tunnel.');
 }
 
-// ── Step 5: Flutter run ───────────────────────────────────────────────────────
-log('5/5', c.magenta, 'Launching Flutter app...\n');
+// ── Step 5: Flutter run / build ──────────────────────────────────────────────
+const isBuild = process.argv.includes('--build');
+log('5/5', c.magenta, isBuild ? 'Building Flutter APK...\n' : 'Launching Flutter app...\n');
 
 // Read dart-defines from env or local config
 const mapboxToken = process.env.MAPBOX_ACCESS_TOKEN || backendEnv.MAPBOX_ACCESS_TOKEN || '';
@@ -227,7 +228,12 @@ const dartDefines = [
   `--dart-define=BACKEND_URL=http://127.0.0.1:3000`,
 ].filter(Boolean);
 
-const flutterProcess = spawn('flutter', ['run', ...dartDefines], {
+const flutterProcess = spawn(
+  'flutter',
+  isBuild
+    ? ['build', 'apk', ...dartDefines]
+    : ['run', ...dartDefines],
+  {
   cwd: mobileDir,
   stdio: 'inherit',
   env: process.env,

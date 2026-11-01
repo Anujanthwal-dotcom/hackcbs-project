@@ -159,3 +159,5 @@ ui-debug.log
 .cache/
 coverage/
 .nyc_output/
+#all the starting keys
+package.json

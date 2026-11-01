@@ -15,7 +15,7 @@
     "docker:logs": "docker compose logs -f",
     "adb:reverse": "adb reverse tcp:3000 tcp:3000",
     "mobile:run": "node scripts/mobile-run.js",
-    "mobile:build": "cd mobile && flutter build apk --dart-define=BACKEND_URL=http://127.0.0.1:3000"
+    "mobile:build": "node scripts/mobile-run.js --build"
   },
   "keywords": [
     "agriculture",
@@ -27,4 +27,3 @@
   "author": "",
   "license": "UNLICENSED"
 }
-

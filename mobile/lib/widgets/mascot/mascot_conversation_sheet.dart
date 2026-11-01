@@ -235,6 +235,13 @@ class _MascotConversationSheetState extends State<MascotConversationSheet> {
     _voiceService.stopSpeaking();
     _isAwaitingDemoConfirmation = false;
     final lang = _voiceLanguage;
+
+    // Reserve the demo slot SYNCHRONOUSLY before the sheet pop begins.
+    // This ensures GlobalMascotOverlay's whenComplete → _startWakeWordListening
+    // sees isRunningOrLaunching = true and does NOT restart the mic listener,
+    // which would pick up TTS audio and re-open this sheet.
+    GuidedDemoService.instance.reserveLaunch();
+
     widget.onMinimize(); // Drop the mascot chat sheet immediately
 
     // Delay slightly (300ms) until sheet pop transition settles,
